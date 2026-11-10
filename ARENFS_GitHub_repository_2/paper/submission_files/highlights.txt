@@ -1,0 +1,5 @@
+- AR-ENFS fuses evolving fuzzy rules with direct and residual forecast paths.
+- Seasonal specialization of rule consequents is the most consistent ablation gain.
+- AR-ENFS attains the lowest mean error against five evolving fuzzy systems.
+- At seven days it outperforms the strongest competitor, ePL, in all six cities.
+- Rules map onto warm/cool-season regimes; noise sensitivity is the trade-off.

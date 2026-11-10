@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "smoke": {"cities": ["LISBOA"], "horizons": [1], "max_rows": 900, "warmup": 180},
+    "pilot": {"cities": ["LISBOA", "PORTO", "BRAGA"], "horizons": [1, 7], "max_rows": null, "warmup": 365},
+    "paper": {"cities": ["BRAGA", "COIMBRA", "EVORA", "FARO", "LISBOA", "PORTO"], "horizons": [1, 7], "max_rows": null, "warmup": 365}
+  },
+  "models": [
+    "Persistence", "SeasonalPersistence7", "OnlineRLS",
+    "ePL", "ePL_plus", "exTS", "Simpl_eTS", "eMG", "ePL_KRLS_DISCO",
+    "AR_ENFS_A0", "AR_ENFS_A1", "AR_ENFS_A7"
+  ],
+  "ar_enfs_configurations": {
+    "AR_ENFS_A0": {"scale_x": true, "scale_y": false, "prediction_mode": "mixed", "residual_gate": 1.0, "max_rules": 50, "n_regimes": 3, "regime_mode": "hard"},
+    "AR_ENFS_A1": {"scale_x": true, "scale_y": true, "prediction_mode": "mixed", "residual_gate": 1.0, "max_rules": 50, "n_regimes": 3, "regime_mode": "hard"},
+    "AR_ENFS_A7": {"scale_x": true, "scale_y": true, "prediction_mode": "mixed", "residual_gate": 0.75, "max_rules": 12, "n_regimes": 3, "regime_mode": "hard"}
+  },
+  "rolling_window": 30,
+  "checkpoint_every_model": true,
+  "explosion_multiplier": 10.0,
+  "random_seed": 42
+}

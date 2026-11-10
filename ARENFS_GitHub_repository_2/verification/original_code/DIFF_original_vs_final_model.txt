@@ -1,0 +1,11 @@
+--- /tmp/claude-0/-home-claude/720e91bf-92de-5806-ab7f-bf618e47a0a5/scratchpad/repo_arenfs/verification/original_code/enfs_energy_experimental_ORIGINAL_mean_activation.py	2026-11-10 04:39:10.376703195 +0000
++++ /tmp/claude-0/-home-claude/720e91bf-92de-5806-ab7f-bf618e47a0a5/scratchpad/repo_arenfs/src/enfs_energy_experimental.py	2026-11-10 03:58:50.748385509 +0000
+@@ -350,7 +350,7 @@
+ 
+     def _activation(self, rule: EnergyRule, x: np.ndarray) -> float:
+         z = (x - rule.center) / np.maximum(rule.sigma, self.min_sigma)
+-        return float(math.exp(-0.5 * float(np.mean(z**2))))
++        return float(math.exp(-0.5 * float(np.sum(z**2))))
+ 
+     def _activations(self, x: np.ndarray) -> np.ndarray:
+         if not self.rules:
