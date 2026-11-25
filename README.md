@@ -29,7 +29,6 @@ results/
 paper/
   main.tex, sample.bib, figures/           LaTeX source of the submitted manuscript
   submission_files/                        highlights, graphical abstract
-verification/                              how the previous manuscript version was checked (see below)
 ```
 
 ## Where each result of the paper comes from
@@ -44,9 +43,9 @@ verification/                              how the previous manuscript version w
 | Table 6, Fig. 5 (benchmark) | `ablation/summary.csv` (A0, A1, A7) + `benchmark_external/summary.csv` | `run_all.py --part benchmark`, `analyze.py` |
 | Table 7 (winners, A7 vs ePL) and significance tests | same | `analyze.py` ("=== SIG full") |
 | Table 8 (2023-2025 scoring) and tests | `*/predictions.csv.gz` | `analyze.py` ("=== HOLDOUT", "=== SIG holdout") |
-| Table 9 (rules in physical units) | `extra/rules_physical.csv` | `run_extra.py --part rules`, `analyze.py` ("=== RULES") |
-| Table 10 (perturbation) | `extra/perturbation.csv` | `run_extra.py --part perturb`, `analyze.py` ("=== PERTURB") |
-| Warm-up sensitivity (Sec. 5.3.4) | `warmup_300/`, `warmup_430/` | `run_all.py --part warmup`, `analyze.py` ("=== WARMUP") |
+| Table 9 (perturbation) | `extra/perturbation.csv` | `run_extra.py --part perturb`, `analyze.py` ("=== PERTURB") |
+| Table 10 (rules in physical units) | `extra/rules_physical.csv` | `run_extra.py --part rules`, `analyze.py` ("=== RULES") |
+| Warm-up sensitivity (Sec. 5.3) | `warmup_300/`, `warmup_430/` | `run_all.py --part warmup`, `analyze.py` ("=== WARMUP") |
 
 ## Installation and full reproduction
 
@@ -67,7 +66,7 @@ python make_figures.py $DATA ../results/out_no_year
 
 All runs are deterministic (AR-ENFS has no stochastic component). The whole pipeline takes about one hour on a
 laptop, dominated by eMG. `--variant no_year` removes the calendar-year counter from the inputs (29 inputs), as in the
-paper; `--variant with_year` keeps it (30 inputs) and reproduces the previous manuscript version.
+paper; `--variant with_year` keeps it (30 inputs) for comparison.
 
 ## Data sources
 
@@ -84,18 +83,3 @@ paper; `--variant with_year` keeps it (30 inputs) and reproduces the previous ma
 * 365-sample warm-up (learned, never scored), then strict predict -> score -> update.
 * Min-max scaling fitted on the warm-up block only; AR-ENFS additionally standardizes online.
 * External evolving fuzzy systems from `evolvingfuzzysystems` 0.1.5 with default hyperparameters.
-
-## Verification of the previous manuscript version (`verification/`)
-
-The previous version of the manuscript (Applied Energy format) included the calendar year among the inputs and its
-AR-ENFS numbers came from an updated model version that was not the one distributed in the original benchmark kit.
-
-* `verification/original_code/` - the original model file (rule activation based on the **mean** of squared
-  deviations), the original benchmark configuration (regime parameters named `n_regimes`/`regime_mode`, which the model
-  silently ignored), and `DIFF_original_vs_final_model.txt` (the only change in the final model: **sum** of squared
-  deviations, i.e. conjunctive activation, as described in the paper).
-* `verification/reproduce_old_paper_A7.py` - run from `src/`: with the final model, regime confidence constant 6 and
-  `year` included, it reproduces the old manuscript's AR-ENFS A7 results exactly (mean RMSE 6.4235 over the 12
-  scenarios; e.g. Lisboa 5.7858 / 7.0083), whereas the original mean-activation code does not.
-* `verification/results_with_year/` - the old synthesis tables, the old benchmark run, the reproduction run, and the
-  ablation re-run with `year` for comparison.
